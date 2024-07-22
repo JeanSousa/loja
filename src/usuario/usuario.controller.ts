@@ -5,7 +5,9 @@ import { UsuarioRepository } from './usuario.repository';
 // e ja cria uma rota raiz, dentro dele passo o prefixo
 @Controller('/usuarios')
 export class UsuarioController {
-  private usuarioRepository = new UsuarioRepository();
+  // o objeto foi injetado no contrutor do controller
+  // atributos podem ser criados direto no construtor no typescript
+  constructor(private usuarioRepository: UsuarioRepository) {}
 
   @Post()
   async criaUsuario(@Body() dadosDoUsuario) {
