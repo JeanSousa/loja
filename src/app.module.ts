@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UsuarioController } from './usuario.controller';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
-  imports: [],
-  // colocar a referencia do controller na arvore de controllers do nestjs
-  controllers: [UsuarioController],
-  providers: [],
+  // estou importando um outro modulo no app.module o modulo raiz
+  imports: [UsuarioModule],
 })
 export class AppModule {}
