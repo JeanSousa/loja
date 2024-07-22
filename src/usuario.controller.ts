@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
 
 // o decorator controller mostra que é um controller
@@ -12,5 +12,10 @@ export class UsuarioController {
     // o decorator @Body mostra que a variável ira pegar do body da requisição
     this.usuarioRepository.salvar(dadosDoUsuario);
     return dadosDoUsuario;
+  }
+
+  @Get()
+  async listaUsuarios() {
+    return this.usuarioRepository.listar();
   }
 }
