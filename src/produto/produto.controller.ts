@@ -16,3 +16,5 @@ export class ProdutoController {
     return this.produtoRepository.listar();
   }
 }
+// https://docs.nestjs.com/pipes
+// https://docs.nestjs.com/faq/request-lifecycle
