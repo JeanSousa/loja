@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
+import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 
 // o decorator controller mostra que é um controller
 // e ja cria uma rota raiz, dentro dele passo o prefixo
@@ -9,8 +10,8 @@ export class UsuarioController {
   // atributos podem ser criados direto no construtor no typescript
   constructor(private usuarioRepository: UsuarioRepository) {}
 
-  @Post()
-  async criaUsuario(@Body() dadosDoUsuario) {
+  @Post() // tipo cria usuario DTO tipa os dados do usuario
+  async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
     // o decorator @Body mostra que a variável ira pegar do body da requisição
     this.usuarioRepository.salvar(dadosDoUsuario);
     return dadosDoUsuario;
