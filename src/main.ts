@@ -6,6 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // precisa ser feito o BIND do global pipes no nível de aplicação na main.ts
   // para que todos os endpoints estejam protegidos pelo GlobalPipes
+  // "um pipe é uma classe com decorator @injectable que é um provider
+  // nesse caso o pipe global serve para ser aplicado em todos os handlers de rotas"
   app.useGlobalPipes(
     // o pipe que vou usar é o validation pipe
     new ValidationPipe({
