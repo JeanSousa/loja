@@ -14,4 +14,15 @@ export class UsuarioRepository {
   async listar() {
     return this.usuarios;
   }
+
+  async existeComEmail(email: string) {
+    // o metodo find vai percorrer o array e vai retornar
+    // caso o usuario.email (do array) for igual ao email passado como parametro
+    // caso não encontre retorna undefined
+    const possivelUsuario = this.usuarios.find(
+      (usuario) => usuario.email === email,
+    );
+
+    return possivelUsuario !== undefined;
+  }
 }
