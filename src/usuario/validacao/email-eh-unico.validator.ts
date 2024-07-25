@@ -28,10 +28,12 @@ export class EmailEhUnicoValidator implements ValidatorConstraintInterface {
 // o decorator é uma função que retorna uma função e tem parametro tipado como validation options
 export const EmailEhUnico = (opcoesDeValidacoes: ValidationOptions) => {
   // objeto onde ta sendo executado e o segundo parametro é a propriedade onde esta sendo executado
+  // exemplo: ao ser aplicado o objeto = minha classe criar usuário DTO
+  // propriedade: ao ser aplicado vai ser a propriedade email
   return (objeto: Object, propriedade: string) => {
     // registrar o decorator que vai agir sobre o objeto e propriedade mas vai usar a classe de validação acima
     registerDecorator({
-      target: objeto.constructor,
+      target: objeto.constructor, // é o construtor da classe, mesmo que não exista no typescript é implícito
       propertyName: propriedade,
       options: opcoesDeValidacoes,
       constraints: [],

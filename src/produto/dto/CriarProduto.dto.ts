@@ -2,10 +2,12 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
+  IsEmail,
   IsNotEmpty,
   IsNumber,
   IsString,
   IsUrl,
+  IsUUID,
   MaxLength,
   Min,
   ValidateNested,
@@ -31,6 +33,9 @@ export class ImagensProdutoDTO {
 }
 
 export class CriarProdutoDTO {
+  @IsUUID(undefined, { message: 'ID de usuário inválido' })
+  usuarioId: string;
+
   @IsString()
   @IsNotEmpty({ message: 'O nome do produto não pode ser vazio!' })
   nome: string;
