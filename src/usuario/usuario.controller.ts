@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
+import { UsuarioEntity } from './usuario.entity';
+import { v4 as uuid } from 'uuid';
 
 // o decorator controller mostra que é um controller
 // e ja cria uma rota raiz, dentro dele passo o prefixo
@@ -13,8 +15,16 @@ export class UsuarioController {
   @Post() // tipo cria usuario DTO tipa os dados do usuario
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
     // o decorator @Body mostra que a variável ira pegar do body da requisição
-    this.usuarioRepository.salvar(dadosDoUsuario);
-    return dadosDoUsuario;
+    const usuarioEntity = new UsuarioEntity();
+    const { email, senha, nome } = dadosDoUsuario;
+    Object.assign(usuarioEntity, { email, senha, nome, id: uuid() });
+    // usuarioEntity.email = dadosDoUsuario.email;
+    // usuarioEntity.senha = dadosDoUsuario.senha;
+    // usuarioEntity.nome = dadosDoUsuario.nome;
+    // usuarioEntity.id = uuid();
+
+    this.usuarioRepository.salvar(usuarioEntity);
+    return { id: usuarioEntity.id, message: 'Usuário criado com sucesso!' };
   }
 
   @Get()

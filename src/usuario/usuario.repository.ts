@@ -1,13 +1,15 @@
 // nesta classe vou isolar a persistencia do usuario
 
 import { Injectable } from '@nestjs/common';
+import { UsuarioEntity } from './usuario.entity';
 
 // @injectable = significa que a classe é um provider
 @Injectable()
 export class UsuarioRepository {
-  private usuarios = [];
+  // variavel de usuarios é tipada como entidade de usuario
+  private usuarios: UsuarioEntity[] = [];
 
-  async salvar(usuario) {
+  async salvar(usuario: UsuarioEntity) {
     this.usuarios.push(usuario);
   }
 
