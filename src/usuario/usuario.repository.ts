@@ -27,4 +27,34 @@ export class UsuarioRepository {
 
     return possivelUsuario !== undefined;
   }
+
+  // o helper partial significa que irei receber um tipo usuarioEntity de forma parcial, ou seja as propriedades sao opcionais
+  async atualiza(id: string, dadosDeAtualizacao: Partial<UsuarioEntity>) {
+    const possivelUsuario = this.usuarios.find(
+      (usuarioSalvo) => usuarioSalvo.id === id,
+    );
+
+    if (!possivelUsuario) {
+      throw new Error('Usuário não existe');
+    }
+
+    // entries vai pegar todas as chaves e valores do objeto e transformar em outro array
+    // tenho um array para cada chave e valor quando passo por object.entrie
+    // entao [chave, valor] desestrutura cada array
+    // [
+    //   [ 'nome', 'Jean Sousaaaa' ],
+    //   [ 'email', 'jeanjr.silvasousa@gmail.com' ],
+    //   [ 'senha', 'dev1234567' ]
+    // ]
+    Object.entries(dadosDeAtualizacao).forEach(([chave, valor]) => {
+      // se chave for id faço o return pois não quero atualizar o id
+      if (chave === 'id') {
+        return;
+      }
+
+      possivelUsuario[chave] = valor;
+    });
+
+    return possivelUsuario;
+  }
 }

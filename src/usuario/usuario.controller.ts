@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
 import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
 import { UsuarioEntity } from './usuario.entity';
 import { v4 as uuid } from 'uuid';
 import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
 import { identity } from 'rxjs';
+import { AtualizaUsuarioDTO } from './dto/AtualizaUsuario.dto';
 
 // o decorator controller mostra que é um controller
 // e ja cria uma rota raiz, dentro dele passo o prefixo
@@ -29,7 +30,7 @@ export class UsuarioController {
     this.usuarioRepository.salvar(usuarioEntity);
     return {
       usuario: new ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
-      message: 'Usuário criado com sucesso!',
+      mensagem: 'Usuário criado com sucesso!',
     };
   }
 
@@ -40,5 +41,21 @@ export class UsuarioController {
       (usuario) => new ListaUsuarioDTO(usuario.id, usuario.nome),
     );
     return usuariosLista;
+  }
+
+  @Put('/:id')
+  async atualizaUsuario(
+    @Param('id') id: string, // decorator param informa para o nest que busca um route param
+    @Body() novosDados: AtualizaUsuarioDTO,
+  ) {
+    const usuarioAtualizado = await this.usuarioRepository.atualiza(
+      id,
+      novosDados,
+    );
+
+    return {
+      usuario: usuarioAtualizado,
+      mensagem: 'Usuário atualizado com sucesso',
+    };
   }
 }
